@@ -1,7 +1,7 @@
 import django
 from django.shortcuts import render
 from django.views import View
-from .forms import PostForm
+from .forms import PostForm, CommentForm
 from .models import Post
 from django.shortcuts import get_object_or_404
 
@@ -38,11 +38,13 @@ class PostDetailView(View):
     def get(self, request, pk, *args, **kwargs):
         try:
             post = Post.objects.get(pk=pk)
+            form = CommentForm()
         except Post.DoesNotExist:
             post=None
 
         context = {
             'post': post,
+            'form': form,
         }
 
         return render(request, 'social/post_detail.html', context)
