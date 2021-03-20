@@ -1,9 +1,12 @@
 import django
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views import View
+from django.views.generic.edit import DeleteView
 from .forms import PostForm, CommentForm
 from .models import Post
 from django.shortcuts import get_object_or_404
+from django.views.generic import UpdateView, DeleteView
 
 class PostListView(View):
     def get(self, request, *args, **kwargs):
@@ -51,3 +54,19 @@ class PostDetailView(View):
 
     def post(self, request, *args, **kwargs):
         pass
+
+
+class PostEditView(UpdateView):
+    model = Post
+    fields = ['body']
+    template_name = 'social/post_edit.html'
+
+    def get_success_url(self):
+        pk = self.kwargs['pk']
+        return reverse_lazy('post_detail', kwargs ={'pk': pk})
+
+
+class PostDeleteView(DeleteView):
+    model = Post
+    template_name = 'social/post_delete.html'
+    success_url = reverse_lazy('post_list')
