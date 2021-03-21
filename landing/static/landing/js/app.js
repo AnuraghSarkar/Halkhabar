@@ -2,6 +2,7 @@ const button = document.querySelector(".myBtn");
 
 button.addEventListener('click',fadeOut);
 
+document.querySelector('body').addEventListener(onload, preventDefault())
 
 
 function fadeOut() {
