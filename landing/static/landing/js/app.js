@@ -2,8 +2,12 @@ const button = document.querySelector(".myBtn");
 
 button.addEventListener('click',fadeOut);
 
-document.querySelector('body').addEventListener(onload, preventDefault())
-
+const form = document.querySelectorAll("form")
+form.addEventListener('onsubmit', (e)=>{
+  e.preventDefault();
+  e.stopPropagation();
+  
+});
 
 function fadeOut() {
 
@@ -86,8 +90,6 @@ trigger.addEventListener('mouseleave', () => {
 });
 
 function render() {
-  // stats.begin();
-
   loop = null;
   
   innerX = lerp(innerX, mouseX, 0.15);
@@ -105,10 +107,7 @@ function render() {
     
   cursorInner.style.transform = `translate3d(${innerX}px, ${innerY}px, 0)`;
   cursorOuter.style.transform = `translate3d(${outerX}px, ${outerY}px, 0) rotate(${angle}deg) scale(${1 + skwish}, ${1 - skwish})`;
-  
-  // stats.end();
-  
-  // Stop loop if interpolation is done.
+
   if (normal !== 0) {
     loop = window.requestAnimationFrame(render);
   }

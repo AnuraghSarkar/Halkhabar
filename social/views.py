@@ -1,14 +1,14 @@
 import django
+from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic.edit import DeleteView
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from .forms import PostForm, CommentForm
-from .models import Comment, Post
+from .models import Comment, Post, UserProfile
 from django.http import Http404
 from django.views.generic import UpdateView, DeleteView
-
 class PostListView(LoginRequiredMixin ,View):
     def get(self, request, *args, **kwargs):
         posts = Post.objects.all().order_by('-created_on')
@@ -119,4 +119,18 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin ,DeleteView):
     def test_func(self):
         post = self.get_object()
         return self.request.user == post.author
+
+
+class ProfileView(View):
+    def get(self, request, pk, *args, **kwargs):
+        profile = UserProfile.objects.get(pk=pk)
+        user = profile.user
+        posts = Post.objects.filter(author=user).order_by('-created_on')
+
+        context = {
+            'user': user,
+            'profile': profile,
+            'posts': posts
+        }
+        return render(request, 'social/profile.html', context)
 
