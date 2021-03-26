@@ -2,13 +2,6 @@ const button = document.querySelector(".myBtn");
 
 button.addEventListener('click',fadeOut);
 
-const form = document.querySelectorAll("form")
-form.addEventListener('onsubmit', (e)=>{
-  e.preventDefault();
-  e.stopPropagation();
-  
-});
-
 function fadeOut() {
 
     TweenMax.to(".myBtn", 1, {
