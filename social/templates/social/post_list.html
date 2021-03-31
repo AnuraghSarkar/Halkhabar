@@ -20,15 +20,19 @@
   {% for post in post_list %}
   <div class="row justify-content-center mt-3">
     <div class="col-md-5 col-sm-12 border-bottom position-relative">
-      <p>
-        <a
-          style="text-decoration: none"
-          class="text-primary"
-          href="{% url 'profile' post.author.profile.pk %}"
-          >@{{ post.author }}</a
-        >
-        {{ post.created_on }}
-      </p>
+      <div>
+        <a href="{% url 'profile' post.author.profile.pk %}">
+          <img src="{{ post.author.profile.picture.url }}" alt="profile_picture" class="round-circle post-img" height="40" width="40">
+        </a>
+        <p class="post-text">
+          <a
+            class="text-primary post-link"
+            href="{% url 'profile' post.author.profile.pk %}"
+            >@{{ post.author }}</a
+          >
+          {{ post.created_on }}
+        </p>
+      </div>
       <div class="position-relative">
         <p>{{ post.body }}</p>
         <a href="{% url 'post_detail' post.pk %}" class="stretched-link"></a>
@@ -39,8 +43,7 @@
           {% csrf_token %}
           <input type="hidden" name="next" value="{{ request.path }}" />
           <button
-            class="btn btn-outline-success"
-            style="border: none; box-shadow: none"
+            class="btn btn-outline-success remove-default-btn"
             type="submit"
           >
             <i class="far fa-thumbs-up">
@@ -53,8 +56,7 @@
           {% csrf_token %}
           <input type="hidden" name="next" value="{{ request.path }}" />
           <button
-            class="btn btn-outline-danger"
-            style="border: none; box-shadow: none"
+            class="btn btn-outline-danger remove-default-btn"
             type="submit"
           >
             <i class="far fa-thumbs-down">

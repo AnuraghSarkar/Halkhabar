@@ -1,0 +1,31 @@
+.remove-default-btn {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+.edit-color {
+    color: darkcyan;
+}
+
+.delete-color {
+    color: red;
+}
+
+.post-link {
+    text-decoration: none;
+}
+.dark-color {
+    color: #333;
+}
+
+
+
+.post-text {
+    padding-top: .5rem;
+}
+
+.post-img {
+    float: left;
+    margin-right: 1rem;
+}

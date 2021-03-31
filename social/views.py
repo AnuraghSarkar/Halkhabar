@@ -12,7 +12,10 @@ from django.http import Http404, HttpResponseRedirect
 from django.views.generic import UpdateView, DeleteView
 class PostListView(LoginRequiredMixin ,View):
     def get(self, request, *args, **kwargs):
-        posts = Post.objects.all().order_by('-created_on')
+        logged_in_user = request.user
+        posts = Post.objects.filter(
+            author__profile__followers__in = [logged_in_user]
+        ).order_by('-created_on')
         form = PostForm()
         context = {
             'post_list' : posts,
