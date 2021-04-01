@@ -14,7 +14,7 @@ class PostListView(LoginRequiredMixin ,View):
     def get(self, request, *args, **kwargs):
         logged_in_user = request.user
         posts = Post.objects.filter(
-            author__profile__followers__in = [logged_in_user]
+            author__profile__followers__in=[logged_in_user.id]
         ).order_by('-created_on')
         form = PostForm()
         context = {
@@ -25,7 +25,10 @@ class PostListView(LoginRequiredMixin ,View):
         return render(request, 'social/post_list.html', context)
 
     def post(self, request, *args, **kwargs):
-        posts = Post.objects.all().order_by('-created_on')
+        logged_in_user = request.user
+        posts = Post.objects.filter(
+            author__profile__followers__in=[logged_in_user.id]
+        ).order_by('-created_on')
         
         form = PostForm(request.POST)
 
@@ -251,3 +254,14 @@ class UserSearch(View):
         }
 
         return render(request, 'social/search.html', context)
+
+class ListFollowers(View):
+    def get(self,request,pk,*args, **kwargs):
+        profile = UserProfile.objects.get(pk=pk)
+        followers = profile.followers.all()
+
+        context = {
+            'profile':profile,
+            'followers':followers,
+        }
+        return render(request, 'social/followers_list.html', context)

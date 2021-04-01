@@ -59,7 +59,7 @@
           ></a>
           <ul class="dropdown-menu">
             <li>
-              <a href="{% url 'profile' user.profile.pk %}" class="dropdown-item">Profile</a>
+              <a href="{% url 'profile' request.user.profile.pk %}" class="dropdown-item">Profile</a>
             </li>
 
             <li>
