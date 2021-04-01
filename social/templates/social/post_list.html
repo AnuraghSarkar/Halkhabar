@@ -18,8 +18,8 @@
     </div>
   </div>
   {% for post in post_list %}
-  <div class="row justify-content-center mt-3 mb-5">
-    <div class="col-md-5 col-sm-12 border-bottom position-relative">
+  <div class="row justify-content-center mt-3">
+    <div class="col-md-5 col-sm-12 border-bottom">
       <div>
         <a href="{% url 'profile' post.author.profile.pk %}">
           <img src="{{ post.author.profile.picture.url }}" alt="profile_picture" class="round-circle post-img" height="40" width="40">
@@ -37,7 +37,6 @@
         <p>{{ post.body }}</p>
         <a href="{% url 'post_detail' post.pk %}" class="stretched-link"></a>
       </div>
-
       <div class="d-flex flex-row">
         <form method="POST" action="{% url 'like' post.pk %}">
           {% csrf_token %}
@@ -66,7 +65,8 @@
         </form>
       </div>
     </div>
-    {% endfor %}
+  </div>
+  {% endfor %}
   </div>
   {% endblock content %}
 </div>

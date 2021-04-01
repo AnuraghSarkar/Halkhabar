@@ -97,12 +97,6 @@
           {{ post.created_on }}
         </p>
       </div>
-        <a
-          href="{% url 'profile' post.author.profile.pk %}"
-          class="text-primary post-link"
-          >@{{ post.author }}
-        </a>
-        {{ post.created_on }}
       <div class="position-relative">
         <p>{{ post.body }}</p>
         <a href="{% url 'post_detail' post.pk %}" class="stretched-link"></a>
