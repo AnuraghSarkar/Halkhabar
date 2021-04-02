@@ -1,8 +1,10 @@
 from django.urls import path
 from django.urls.conf import include
-from .views import PostListView, PostDetailView, PostEditView, PostDeleteView, CommentDeleteView, ProfileView, ProfileEditView, AddFollower, RemoveFollower, AddDislike, AddLike, UserSearch, ListFollowers
+from .views import PostListView, PostDetailView, PostEditView, PostDeleteView, CommentDeleteView, ProfileView, ProfileEditView, AddFollower, RemoveFollower, AddDislike, AddLike, UserSearch, ListFollowers, AddCommentLike, AddCommentDislike
 
 urlpatterns = [
+
+    # Post Url Patterns
     path('', PostListView.as_view(), name='post_list'),
     path('post/<int:pk>/', PostDetailView.as_view(), name='post_detail'),
     path('post/edit/<int:pk>/', PostEditView.as_view(), name='post_edit'),
@@ -11,7 +13,11 @@ urlpatterns = [
          CommentDeleteView.as_view(), name='comment_delete'),
     path('post/<int:pk>/like', AddLike.as_view(), name='like'),
     path('post/<int:pk>/dislike', AddDislike.as_view(), name='dislike'),
-    
+    path('post/<int:post_pk>/comment/<int:pk>/like', AddCommentLike.as_view(), name='comment_like'),
+    path('post/<int:post_pk>/comment/<int:pk>/dislike', AddCommentDislike.as_view(), name='comment_dislike'),
+
+    # Profile Url Patterns
+
     path('profile/<int:pk>/',ProfileView.as_view(), name='profile'),
     path('profile/edit/<int:pk>/',ProfileEditView.as_view(), name='profile_edit'),
     path('profile/<int:pk>/followers/add', AddFollower.as_view(), name='add_follower'),    

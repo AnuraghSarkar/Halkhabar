@@ -29,3 +29,10 @@
     float: left;
     margin-right: 1rem;
 }
+
+.default-btn {
+    background-color: #101010;
+    border: none;
+    box-shadow: none;
+    color: #101010;
+}

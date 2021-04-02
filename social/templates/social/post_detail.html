@@ -90,6 +90,34 @@
             {% endif %}
           </div>
             <p>{{ comment.comment }}</p>
+
+            <div class="d-flex flex-row">
+              <form method="POST" action="{% url 'comment_like' post.pk comment.pk %}">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.path }}" />
+                <button
+                  class="btn btn-outline-success remove-default-btn"
+                  type="submit"
+                >
+                  <i class="far fa-thumbs-up">
+                    <span>{{ comment.likes.all.count }}</span></i
+                  >
+                </button>
+              </form>
+      
+              <form method="POST" action="{% url 'comment_dislike' post.pk comment.pk %}">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.path }}" />
+                <button
+                  class="btn btn-outline-danger remove-default-btn"
+                  type="submit"
+                >
+                  <i class="far fa-thumbs-down">
+                    <span>{{ comment.dislikes.all.count }}</span></i
+                  >
+                </button>
+              </form>
+            </div>
         </div>
     </div>
     {% endfor %}
