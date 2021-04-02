@@ -1,6 +1,6 @@
 from django.urls import path
 from django.urls.conf import include
-from .views import PostListView, PostDetailView, PostEditView, PostDeleteView, CommentDeleteView, ProfileView, ProfileEditView, AddFollower, RemoveFollower, AddDislike, AddLike, UserSearch, ListFollowers, AddCommentLike, AddCommentDislike
+from .views import PostListView, PostDetailView, PostEditView, PostDeleteView, CommentDeleteView, ProfileView, ProfileEditView, AddFollower, RemoveFollower, AddDislike, AddLike, UserSearch, ListFollowers, AddCommentLike, AddCommentDislike, CommentReplyView
 
 urlpatterns = [
 
@@ -15,6 +15,7 @@ urlpatterns = [
     path('post/<int:pk>/dislike', AddDislike.as_view(), name='dislike'),
     path('post/<int:post_pk>/comment/<int:pk>/like', AddCommentLike.as_view(), name='comment_like'),
     path('post/<int:post_pk>/comment/<int:pk>/dislike', AddCommentDislike.as_view(), name='comment_dislike'),
+    path('post/<int:post_pk>/comment/<int:pk>/reply', CommentReplyView.as_view(), name='comment_reply'),
 
     # Profile Url Patterns
 
