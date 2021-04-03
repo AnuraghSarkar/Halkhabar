@@ -2,27 +2,29 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class="container">
-    <div class="row mt-5">
-        <div class="col-md-5 col-sm-6">
-            <a href="{% url 'profile' object.pk %}" class="btn btn-secondary"><i class="fas fa-hand-point-left"></i></a>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-md-5 col-sm-6">
+                <a href="{% url 'profile' object.pk %}" class="btn btn-secondary"><i class="fas fa-hand-point-left"></i></a>
+            </div>
         </div>
-    </div>
-    <div class="row justify-content-center mt-3">
-        <div class="col-md-5 col-sm-12 border-bottom">
-            <h5>Update your Profile !</h5>
+        <div class="row justify-content-center mt-3">
+            <div class="col-md-5 col-sm-12 border-bottom">
+                <h5>Update your Profile !</h5>
+            </div>
         </div>
-    </div>
 
-    <div class="row justify-content-center mt-3">
-        <div class="col-md-5 col-sm-12 border-bottom">
-            <form method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form | crispy }}
-                <div class="d-grid gap-2"><button class="btn btn-secondary mt-3 mb-5">Update</button></div>
-            </form>
+        <div class="row justify-content-center mt-3">
+            <div class="col-md-5 col-sm-12 border-bottom">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form | crispy }}
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-secondary mt-3 mb-5">Update</button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
 
-</div>
+    </div>
 {% endblock content %}

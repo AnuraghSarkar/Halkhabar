@@ -1,16 +1,16 @@
-import django
-from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
+from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.db.models import Q
+from django.http import Http404, HttpResponseRedirect
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic.edit import DeleteView
-from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
+from django.views.generic import UpdateView, DeleteView
+
 from .forms import PostForm, CommentForm
 from .models import Comment, Post, UserProfile
-from django.http import Http404, HttpResponseRedirect
-from django.views.generic import UpdateView, DeleteView
-class PostListView(LoginRequiredMixin ,View):
+
+
+class PostListView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         logged_in_user = request.user
         posts = Post.objects.filter(
@@ -18,7 +18,7 @@ class PostListView(LoginRequiredMixin ,View):
         ).order_by('-created_on')
         form = PostForm()
         context = {
-            'post_list' : posts,
+            'post_list': posts,
             'form': form,
         }
 
@@ -29,23 +29,23 @@ class PostListView(LoginRequiredMixin ,View):
         posts = Post.objects.filter(
             author__profile__followers__in=[logged_in_user.id]
         ).order_by('-created_on')
-        
+
         form = PostForm(request.POST)
 
         if form.is_valid():
             new_post = form.save(commit=False)
             new_post.author = request.user
             new_post.save()
-            
+
         context = {
-            'post_list' : posts,
+            'post_list': posts,
             'form': form,
         }
 
         return render(request, 'social/post_list.html', context)
 
 
-class PostDetailView(LoginRequiredMixin ,View):
+class PostDetailView(LoginRequiredMixin, View):
     def get(self, request, pk, *args, **kwargs):
         try:
             post = Post.objects.get(pk=pk)
@@ -53,17 +53,15 @@ class PostDetailView(LoginRequiredMixin ,View):
             comments = Comment.objects.filter(post=post).order_by('-created_on')
 
             context = {
-            'post': post,
-            'form': form,
-            'comments': comments
-        }
+                'post': post,
+                'form': form,
+                'comments': comments
+            }
 
             return render(request, 'social/post_detail.html', context)
         except Post.DoesNotExist:
-            post=None
+            post = None
             raise Http404("Post does not exist")
-
-        
 
     def post(self, request, pk, *args, **kwargs):
 
@@ -78,19 +76,19 @@ class PostDetailView(LoginRequiredMixin ,View):
                 new_comment.save()
             comments = Comment.objects.filter(post=post).order_by('-created_on')
 
-
             context = {
-            'post': post,
-            'form': form,
-            'comments': comments
+                'post': post,
+                'form': form,
+                'comments': comments
 
             }
 
             return render(request, 'social/post_detail.html', context)
 
         except Post.DoesNotExist:
-            post=None
+            post = None
             raise Http404("Post does not exist")
+
 
 class CommentReplyView(LoginRequiredMixin, View):
     def post(self, request, post_pk, pk, *args, **kwargs):
@@ -107,21 +105,22 @@ class CommentReplyView(LoginRequiredMixin, View):
 
         return redirect('post_detail', pk=post_pk)
 
-        
-class PostEditView(LoginRequiredMixin, UserPassesTestMixin ,UpdateView):
+
+class PostEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     fields = ['body']
     template_name = 'social/post_edit.html'
 
     def get_success_url(self):
         pk = self.kwargs['pk']
-        return reverse_lazy('post_detail', kwargs ={'pk': pk})
+        return reverse_lazy('post_detail', kwargs={'pk': pk})
+
     def test_func(self):
         post = self.get_object()
         return self.request.user == post.author
 
 
-class PostDeleteView( LoginRequiredMixin, UserPassesTestMixin ,DeleteView):
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
     template_name = 'social/post_delete.html'
     success_url = reverse_lazy('post_list')
@@ -130,14 +129,15 @@ class PostDeleteView( LoginRequiredMixin, UserPassesTestMixin ,DeleteView):
         post = self.get_object()
         return self.request.user == post.author
 
-class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin ,DeleteView):
+
+class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Comment
     template_name = 'social/comment_delete.html'
 
     def get_success_url(self):
         pk = self.kwargs['post_pk']
         return reverse_lazy('post_detail', kwargs={'pk': pk})
-    
+
     def test_func(self):
         post = self.get_object()
         return self.request.user == post.author
@@ -150,7 +150,7 @@ class ProfileView(View):
         posts = Post.objects.filter(author=user).order_by('-created_on')
         followers = profile.followers.all()
 
-        if len(followers) ==0:
+        if len(followers) == 0:
             is_following = False
 
         for follower in followers:
@@ -161,28 +161,30 @@ class ProfileView(View):
 
         number_of_followers = len(followers)
 
-
         context = {
             'user': user,
             'profile': profile,
             'posts': posts,
             'number_of_followers': number_of_followers,
-            'is_following':is_following
+            'is_following': is_following
         }
         return render(request, 'social/profile.html', context)
 
+
 class ProfileEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = UserProfile
-    fields = ['name','bio','birthdate', 'location', 'picture']
+    fields = ['name', 'bio', 'birthdate', 'location', 'picture']
     template_name = 'social/profile_edit.html'
-    
+
     def get_success_url(self):
         pk = self.kwargs['pk']
         return reverse_lazy('profile', kwargs={'pk': pk})
+
     def test_func(self):
         profile = self.get_object()
         return self.request.user == profile.user
-    
+
+
 class AddFollower(LoginRequiredMixin, View):
     def post(self, request, pk, *args, **kwargs):
         profile = UserProfile.objects.get(pk=pk)
@@ -190,12 +192,14 @@ class AddFollower(LoginRequiredMixin, View):
 
         return redirect('profile', pk=profile.pk)
 
+
 class RemoveFollower(LoginRequiredMixin, View):
     def post(self, request, pk, *args, **kwargs):
         profile = UserProfile.objects.get(pk=pk)
         profile.followers.remove(request.user)
 
         return redirect('profile', pk=profile.pk)
+
 
 class AddLike(LoginRequiredMixin, View):
     def post(self, request, pk, *args, **kwargs):
@@ -226,6 +230,7 @@ class AddLike(LoginRequiredMixin, View):
 
         next = request.POST.get('next', '/')
         return HttpResponseRedirect(next)
+
 
 class AddDislike(LoginRequiredMixin, View):
     def post(self, request, pk, *args, **kwargs):
@@ -288,6 +293,7 @@ class AddCommentLike(LoginRequiredMixin, View):
         next = request.POST.get('next', '/')
         return HttpResponseRedirect(next)
 
+
 class AddCommentDislike(LoginRequiredMixin, View):
     def post(self, request, pk, *args, **kwargs):
         comment = Comment.objects.get(pk=pk)
@@ -318,6 +324,7 @@ class AddCommentDislike(LoginRequiredMixin, View):
         next = request.POST.get('next', '/')
         return HttpResponseRedirect(next)
 
+
 class UserSearch(View):
     def get(self, request, *args, **kwargs):
         query = self.request.GET.get('query')
@@ -331,13 +338,14 @@ class UserSearch(View):
 
         return render(request, 'social/search.html', context)
 
+
 class ListFollowers(View):
-    def get(self,request,pk,*args, **kwargs):
+    def get(self, request, pk, *args, **kwargs):
         profile = UserProfile.objects.get(pk=pk)
         followers = profile.followers.all()
 
         context = {
-            'profile':profile,
-            'followers':followers,
+            'profile': profile,
+            'followers': followers,
         }
         return render(request, 'social/followers_list.html', context)

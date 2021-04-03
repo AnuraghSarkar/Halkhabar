@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'landing',
     'django.contrib.sites',
     'crispy_forms',
+    'landing.templatetags',
 ]
 
 SITE_ID = 1
@@ -139,7 +140,6 @@ STATICFILES_DIRS = [
 
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
-
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 

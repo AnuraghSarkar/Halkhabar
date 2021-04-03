@@ -1,9 +1,9 @@
 from django import forms
-from django.forms import fields
+
 from .models import Comment, Post
 
-class PostForm(forms.ModelForm):
 
+class PostForm(forms.ModelForm):
     body = forms.CharField(label='', widget=forms.Textarea(attrs={
         'rows': '3',
         'placeholder': 'Express yourself here !'
@@ -13,8 +13,8 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = ['body']
 
-class CommentForm(forms.ModelForm):
 
+class CommentForm(forms.ModelForm):
     comment = forms.CharField(label='', widget=forms.Textarea(attrs={
         'rows': '3',
         'placeholder': 'Comment Your Views !'

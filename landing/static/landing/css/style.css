@@ -2,68 +2,68 @@
     margin: 0;
     padding: 0;
     box-sizing: inherit;
-  }
-  
-  *::after {
+}
+
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: inherit;
-  }
-  
-  *::before {
+}
+
+*::before {
     margin: 0;
     padding: 0;
     box-sizing: inherit;
-  }
-  
-  body {
+}
+
+body {
     box-sizing: border-box;
     min-height: 100vh;
     min-width: 100vw;
-  }
-  
-  html:hover .cursor {
+}
+
+html:hover .cursor {
     opacity: 1;
-  }
-  
-  .overlay-2 {
+}
+
+.overlay-2 {
     z-index: 0;
     position: absolute;
     width: 100%;
     height: 100vh;
     background: #48a9a6;
-  }
-  
-  .overlay {
+}
+
+.overlay {
     z-index: 1;
     position: absolute;
     width: 100%;
     height: 100vh;
     background: #101010;
-  }
-  
-  .overlay p {
+}
+
+.overlay p {
     font-size: 300px;
     font-weight: 800;
-  }
-  
-  .myBtn {
+}
+
+.myBtn {
     font-family: Poppins;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-  }
-  
-  .myBtn:hover {
+}
+
+.myBtn:hover {
     color: #101010;
-  }
-  
-  .myBtn:hover:before {
+}
+
+.myBtn:hover:before {
     top: 0;
-  }
-  
-  .myBtn:before {
+}
+
+.myBtn:before {
     content: "";
     position: absolute;
     background: #fff;
@@ -73,9 +73,9 @@
     top: 100%;
     z-index: -1;
     transition: top 0.8s ease-out;
-  }
-  
-  button {
+}
+
+button {
     display: block;
     padding: 24px 48px;
     font-family: Poppins;
@@ -90,9 +90,9 @@
     background: none;
     z-index: 1;
     transition: 0.8s ease-out;
-  }
-  
-  .cursor {
+}
+
+.cursor {
     position: fixed;
     top: 0;
     left: 0;
@@ -104,20 +104,20 @@
     transition: opacity 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
     pointer-events: none;
     cursor: pointer;
-  }
-  
-  .cursor--hover .cursor-inner {
+}
+
+.cursor--hover .cursor-inner {
     transform: scale(0.5);
     opacity: 0;
-  }
-  
-  .cursor--hover .cursor-outer {
+}
+
+.cursor--hover .cursor-outer {
     transform: scale(1.4);
     border-color: #000;
     opacity: 1;
-  }
-  
-  .cursor-move-inner {
+}
+
+.cursor-move-inner {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -125,26 +125,26 @@
     height: 6px;
     margin-top: -3px;
     margin-left: -3px;
-  }
-  
-  .cursor-move-outer {
+}
+
+.cursor-move-outer {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-  }
-  
-  .cursor-inner {
+}
+
+.cursor-inner {
     display: block;
     width: 100%;
     height: 100%;
     background: #000;
     border-radius: 50%;
     transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-  }
-  
-  .cursor-outer {
+}
+
+.cursor-outer {
     display: block;
     width: 100%;
     height: 100%;

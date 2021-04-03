@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('social', '0003_userprofile'),
@@ -20,6 +19,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='userprofile',
             name='picture',
-            field=models.ImageField(blank=True, default='upload/profile_pictures/ok.png', upload_to='upload/profile_pictures'),
+            field=models.ImageField(blank=True, default='upload/profile_pictures/ok.png',
+                                    upload_to='upload/profile_pictures'),
         ),
     ]
