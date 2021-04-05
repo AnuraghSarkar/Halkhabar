@@ -1,34 +1,34 @@
 <div class="dropdown">
-    <span class="badge bg-success notification-badge">{{ notifications.count }}</span>
-    <div class="dropdown-content" id="notification-container">
+    <span class="badge bg-success notification-badge" onclick="showNotification()">{{ notifications.count }}</span>
+    <div class="dropdown-content d-none" id="notification-container">
         {% for notification in notifications %}
             {% if notification.post %}
                 {% if notification.notification_type == 1 %}
                     <div class="dropdown-item-parent">
-                        <a href="" class="post-link">@{{ notification.from_user }} liked your post! </a>
+                        <a href="{% url 'post_notification' notification.pk notification.post.pk %}" class="post-link">@{{ notification.from_user }} liked your post! </a>
                         <span class="dropdown-item-close">&times;</span>
                     </div>
                 {% elif notification.notification_type == 2 %}
                 <div class="dropdown-item-parent">
-                    <a href="" class="post-link">@{{ notification.from_user }} commented on your post! </a>
+                    <a href="{% url 'post_notification' notification.pk notification.post.pk %}" class="post-link">@{{ notification.from_user }} commented on your post! </a>
                     <span class="dropdown-item-close">&times;</span>
                 </div>
                 {% endif %}
             {% elif notification.comment %}
                 {% if notification.notification_type == 1 %}
                     <div class="dropdown-item-parent">
-                        <a href="" class="post-link">@{{ notification.from_user }} liked your comment! </a>
+                        <a href="{% url 'post_notification' notification.pk notification.comment.post.pk %}" class="post-link">@{{ notification.from_user }} liked your comment! </a>
                         <span class="dropdown-item-close">&times;</span>
                     </div>
                 {% elif notification.notification_type == 2 %}
                     <div class="dropdown-item-parent">
-                        <a href="" class="post-link">@{{ notification.from_user }} commented on your comment! </a>
+                        <a href="{% url 'post_notification' notification.pk notification.comment.post.pk %}" class="post-link">@{{ notification.from_user }} commented on your comment! </a>
                         <span class="dropdown-item-close">&times;</span>
                     </div>
                 {% endif %}
             {% else %}
                     <div class="dropdown-item-parent">
-                        <a href="" class="post-link">@{{ notification.from_user }} has started following you! </a>
+                        <a href="{% url 'follow_notification' notification.pk notification.from_user.profile.pk %}" class="post-link">@{{ notification.from_user }} has started following you! </a>
                         <span class="dropdown-item-close">&times;</span>
                     </div>
             {% endif %}

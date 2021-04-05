@@ -2,7 +2,7 @@ from django.urls import path
 
 from .views import PostListView, PostDetailView, PostEditView, PostDeleteView, CommentDeleteView, ProfileView, \
     ProfileEditView, AddFollower, RemoveFollower, AddDislike, AddLike, UserSearch, ListFollowers, AddCommentLike, \
-    AddCommentDislike, CommentReplyView
+    AddCommentDislike, CommentReplyView, PostNotification, FollowNotification, RemoveNotification
 
 urlpatterns = [
 
@@ -26,6 +26,9 @@ urlpatterns = [
     path('profile/<int:pk>/followers/add', AddFollower.as_view(), name='add_follower'),
     path('profile/<int:pk>/followers/remove', RemoveFollower.as_view(), name='remove_follower'),
     path('search/', UserSearch.as_view(), name='profile_search'),
-    path("profile/<int:pk>/followers/", ListFollowers.as_view(), name="list_followers"),
+    path('notification/<int:notification_pk>/post/<int:post_pk>', PostNotification.as_view(), name='post_notification'),
+    path('notification/<int:notification_pk>/profile/<int:profile_pk>', FollowNotification.as_view(), name='follow_notification'),
+    path('notification/delete/<int:notification_pk>', RemoveNotification.as_view(), name='notification_delete'),
+
 
 ]
