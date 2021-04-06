@@ -25,6 +25,8 @@ urlpatterns = [
     path('profile/edit/<int:pk>/', ProfileEditView.as_view(), name='profile_edit'),
     path('profile/<int:pk>/followers/add', AddFollower.as_view(), name='add_follower'),
     path('profile/<int:pk>/followers/remove', RemoveFollower.as_view(), name='remove_follower'),
+    path('profile/<int:pk>/followers/', ListFollowers.as_view(), name='list_followers'),
+
     path('search/', UserSearch.as_view(), name='profile_search'),
     path('notification/<int:notification_pk>/post/<int:post_pk>', PostNotification.as_view(), name='post_notification'),
     path('notification/<int:notification_pk>/profile/<int:profile_pk>', FollowNotification.as_view(), name='follow_notification'),
