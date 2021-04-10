@@ -33,3 +33,8 @@ urlpatterns = [
     path('notification/delete/<int:notification_pk>', RemoveNotification.as_view(), name='notification_delete'),
 
 ]
+
+handler404 = 'social.views.error_404'
+handler500 = 'social.views.error_500'
+handler403 = 'social.views.error_403'
+handler400 = 'social.views.error_400'
