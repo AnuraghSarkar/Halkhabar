@@ -385,19 +385,3 @@ class RemoveNotification(View):
 
         return HttpResponse('Success', content_type='text/plain')
 
-
-def error_404(request, exception):
-        data = {}
-        return render(request,'social/404.html', data)
-
-def error_500(request,  exception):
-        data = {}
-        return render(request,'social/500.html', data)
-
-def error_403(request,  exception):
-        data = {}
-        return render(request,'social/403.html', data)
-
-def error_400(request,  exception):
-        data = {}
-        return render(request,'social/400.html', data)

@@ -6,7 +6,7 @@ from .views import PostListView, PostDetailView, PostEditView, PostDeleteView, C
 
 urlpatterns = [
 
-    # Post Url Patterns
+    # Post Url Patterns	
     path('', PostListView.as_view(), name='post_list'),
     path('post/<int:pk>/', PostDetailView.as_view(), name='post_detail'),
     path('post/edit/<int:pk>/', PostEditView.as_view(), name='post_edit'),
@@ -33,8 +33,3 @@ urlpatterns = [
     path('notification/delete/<int:notification_pk>', RemoveNotification.as_view(), name='notification_delete'),
 
 ]
-
-handler404 = 'social.views.error_404'
-handler500 = 'social.views.error_500'
-handler403 = 'social.views.error_403'
-handler400 = 'social.views.error_400'
