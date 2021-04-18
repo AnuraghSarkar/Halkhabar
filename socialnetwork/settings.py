@@ -155,7 +155,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # Default Page to go after login
 LOGIN_REDIRECT_URL = 'post_list'
 
-# Customized All Auth Seiings
+# Customized All Auth Settings
 ACCOUNT_AUTHENTICATION_METHOD = 'username'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True

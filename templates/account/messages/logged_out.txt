@@ -1,2 +1,2 @@
 {% load i18n %}
-{% blocktrans %}You have signed out.{% endblocktrans %}
+{% blocktrans %}You have signed out from Halkhabar. Thank you for loving our webapp. {% endblocktrans %}

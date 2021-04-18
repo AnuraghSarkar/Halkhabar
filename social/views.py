@@ -7,8 +7,9 @@ from django.views import View
 from django.views.generic import UpdateView, DeleteView
 from .forms import PostForm, CommentForm
 from .models import Comment, Post, UserProfile, Notification
+from allauth.account.decorators import verified_email_required
 
-
+@verified_email_required
 class PostListView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         logged_in_user = request.user
@@ -43,7 +44,7 @@ class PostListView(LoginRequiredMixin, View):
 
         return render(request, 'social/post_list.html', context)
 
-
+@verified_email_required
 class PostDetailView(LoginRequiredMixin, View):
     def get(self, request, pk, *args, **kwargs):
         try:
@@ -89,7 +90,7 @@ class PostDetailView(LoginRequiredMixin, View):
             post = None
             raise Http404("Post does not exist")
 
-
+@verified_email_required
 class CommentReplyView(LoginRequiredMixin, View):
     def post(self, request, post_pk, pk, *args, **kwargs):
         post = Post.objects.get(pk=post_pk)
@@ -106,7 +107,7 @@ class CommentReplyView(LoginRequiredMixin, View):
 
         return redirect('post_detail', pk=post_pk)
 
-
+@verified_email_required
 class PostEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     fields = ['body']
@@ -120,7 +121,7 @@ class PostEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         post = self.get_object()
         return self.request.user == post.author
 
-
+@verified_email_required
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
     template_name = 'social/post_delete.html'
@@ -130,7 +131,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         post = self.get_object()
         return self.request.user == post.author
 
-
+@verified_email_required
 class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Comment
     template_name = 'social/comment_delete.html'
@@ -143,7 +144,7 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         post = self.get_object()
         return self.request.user == post.author
 
-
+@verified_email_required
 class ProfileView(View):
     def get(self, request, pk, *args, **kwargs):
         profile = UserProfile.objects.get(pk=pk)
@@ -172,6 +173,7 @@ class ProfileView(View):
         return render(request, 'social/profile.html', context)
 
 
+@verified_email_required
 class ProfileEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = UserProfile
     fields = ['name', 'bio', 'birthdate', 'location', 'picture']
@@ -185,7 +187,7 @@ class ProfileEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         profile = self.get_object()
         return self.request.user == profile.user
 
-
+@verified_email_required
 class AddFollower(LoginRequiredMixin, View):
     def post(self, request, pk, *args, **kwargs):
         profile = UserProfile.objects.get(pk=pk)
@@ -194,7 +196,7 @@ class AddFollower(LoginRequiredMixin, View):
 
         return redirect('profile', pk=profile.pk)
 
-
+@verified_email_required
 class RemoveFollower(LoginRequiredMixin, View):
     def post(self, request, pk, *args, **kwargs):
         profile = UserProfile.objects.get(pk=pk)
@@ -202,7 +204,7 @@ class RemoveFollower(LoginRequiredMixin, View):
 
         return redirect('profile', pk=profile.pk)
 
-
+@verified_email_required
 class AddLike(LoginRequiredMixin, View):
     def post(self, request, pk, *args, **kwargs):
         post = Post.objects.get(pk=pk)
@@ -235,7 +237,7 @@ class AddLike(LoginRequiredMixin, View):
         next = request.POST.get('next', '/')
         return HttpResponseRedirect(next)
 
-
+@verified_email_required
 class AddDislike(LoginRequiredMixin, View):
     def post(self, request, pk, *args, **kwargs):
         post = Post.objects.get(pk=pk)
@@ -267,6 +269,7 @@ class AddDislike(LoginRequiredMixin, View):
         return HttpResponseRedirect(next)
 
 
+@verified_email_required
 class AddCommentLike(LoginRequiredMixin, View):
     def post(self, request, pk, *args, **kwargs):
         comment = Comment.objects.get(pk=pk)
@@ -300,6 +303,7 @@ class AddCommentLike(LoginRequiredMixin, View):
         return HttpResponseRedirect(next)
 
 
+@verified_email_required
 class AddCommentDislike(LoginRequiredMixin, View):
     def post(self, request, pk, *args, **kwargs):
         comment = Comment.objects.get(pk=pk)
@@ -331,6 +335,7 @@ class AddCommentDislike(LoginRequiredMixin, View):
         return HttpResponseRedirect(next)
 
 
+@verified_email_required
 class UserSearch(View):
     def get(self, request, *args, **kwargs):
         query = self.request.GET.get('query')
@@ -345,6 +350,7 @@ class UserSearch(View):
         return render(request, 'social/search.html', context)
 
 
+@verified_email_required
 class ListFollowers(View):
     def get(self, request, pk, *args, **kwargs):
         profile = UserProfile.objects.get(pk=pk)
@@ -356,6 +362,7 @@ class ListFollowers(View):
         }
         return render(request, 'social/followers_list.html', context)
 
+@verified_email_required
 class PostNotification(View):
     def get(self, request, notification_pk, post_pk, *args, **kwargs):
         notification = Notification.objects.get(pk=notification_pk)
@@ -366,6 +373,7 @@ class PostNotification(View):
 
         return redirect('post_detail', pk=post_pk)
 
+@verified_email_required
 class FollowNotification(View):
     def get(self, request, notification_pk, profile_pk, *args, **kwargs):
         notification = Notification.objects.get(pk=notification_pk)
@@ -376,6 +384,7 @@ class FollowNotification(View):
 
         return redirect('profile', pk=profile_pk)
 
+@verified_email_required
 class RemoveNotification(View):
     def delete(self, request, notification_pk, *args, **kwargs):
         notification = Notification.objects.get(pk=notification_pk)

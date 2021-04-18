@@ -1,2 +1,2 @@
 {% load i18n %}
-{% blocktrans %}You have confirmed {{email}}.{% endblocktrans %}
+{% blocktrans %}Hello from Halkhabar. You have confirmed {{email}}.{% endblocktrans %}
