@@ -7,7 +7,6 @@ from django.views import View
 from django.views.generic import UpdateView, DeleteView
 from .forms import PostForm, CommentForm
 from .models import Comment, Post, UserProfile, Notification
-from allauth.account.decorators import verified_email_required
 
 class PostListView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
