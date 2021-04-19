@@ -43,11 +43,11 @@ def user_only(view_function):
 
 class Index(View):
     def get(self, request, *args, **kwargs):
-        posts_count = Post.objects.all().count();
+        posts_count = Post.objects.all().count()
         users_count = User.objects.all().count()
         context = {
-            'posts':posts_count,
-            'users':users_count
+            'posts_count':posts_count,
+            'users_count':users_count
         }
         return render(request, 'dashboard/admin.html', context)
 

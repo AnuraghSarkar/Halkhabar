@@ -10,6 +10,8 @@ from .models import Comment, Post, UserProfile, Notification
 
 class PostListView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
+        if request.user.is_staff:
+            return redirect('dashboard')
         logged_in_user = request.user
         posts = Post.objects.filter(
             author__profile__followers__in=[logged_in_user.id]
