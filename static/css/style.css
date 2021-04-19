@@ -30,6 +30,17 @@
     margin-right: 1rem;
 }
 
+.post-image{
+    min-width: 100%;
+    height: auto;
+    border-radius: .6rem;
+    -webkit-border-radius: .6rem;
+    -moz-border-radius: .6rem;
+    -ms-border-radius: .6rem;
+    -o-border-radius: .6rem;
+    margin-bottom: .6rem;
+}
+
 .default-btn {
     background-color: #101010;
     border: none;
