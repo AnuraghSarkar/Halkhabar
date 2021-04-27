@@ -122,3 +122,42 @@
     -o-transition: .3s;
     cursor: pointer;
 }
+
+.inbox-icon-container {
+	margin-right: .92rem;
+}
+
+.inbox-icon {
+	color: #333;
+	transition: 0.5s;
+}
+
+.inbox-icon:hover {
+	transition: 0.5s;
+}
+
+.empty-text {
+	color: #777;
+	font-size: 1.5rem;
+	text-align: center;
+}
+
+.sent-message {
+	background-color: #f3f3f3;
+	border-radius: 2rem;
+	padding: .6rem 1.3rem;
+	width: 25%;
+	-webkit-border-radius: 2rem;
+	-moz-border-radius: 2rem;
+	-ms-border-radius: 2rem;
+	-o-border-radius: 2rem;
+}
+
+.received-message {
+	background-color: rgb(1, 196, 255);
+	color: #fff;
+	border-radius: 30px;
+	padding: 10px 25px;
+	width: 25%;
+	float: right;
+}

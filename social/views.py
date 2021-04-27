@@ -6,8 +6,8 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.contrib.auth.models import User
 from django.views.generic import UpdateView, DeleteView
-from .forms import PostForm, CommentForm, ThreadForm
-from .models import Comment, Post, ThreadModel, UserProfile, Notification, ThreadModel
+from .forms import PostForm, CommentForm, ThreadForm, MessageForm
+from .models import Comment, Post, ThreadModel, UserProfile, Notification, ThreadModel, MessageModel
 
 class PostListView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
@@ -377,14 +377,15 @@ class RemoveNotification(View):
 
         return HttpResponse('Success', content_type='text/plain')
 
-
 class ListThreads(View):
     def get(self, request, *args, **kwargs):
         threads = ThreadModel.objects.filter(Q(user=request.user) | Q(receiver=request.user))
+
         context = {
-            'threads':threads
+            'threads': threads
         }
-        return render(request, 'social/inbox.html',context)
+
+        return render(request, 'social/inbox.html', context)
 
 class CreateThread(View):
     def get(self, request, *args, **kwargs):

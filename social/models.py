@@ -72,7 +72,7 @@ class Notification(models.Model):
 
 
 class ThreadModel(models.Model):
-    users = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
     receiver = models.ForeignKey(User, on_delete=models.CASCADE,related_name='+')
 
 class MessageModel(models.Model):
