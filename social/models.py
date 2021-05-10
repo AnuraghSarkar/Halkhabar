@@ -8,11 +8,13 @@ from django.utils import timezone
 
 class Post(models.Model):
     body = models.TextField()
-    image = models.ImageField(upload_to='upload/post_photos', blank=True, null=True)
+    image = models.ImageField(
+        upload_to='upload/post_photos', blank=True, null=True)
     created_on = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     likes = models.ManyToManyField(User, blank=True, related_name='likes')
-    dislikes = models.ManyToManyField(User, blank=True, related_name='dislikes')
+    dislikes = models.ManyToManyField(
+        User, blank=True, related_name='dislikes')
 
 
 class Comment(models.Model):
@@ -20,9 +22,12 @@ class Comment(models.Model):
     created_on = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey('Post', on_delete=models.CASCADE)
-    likes = models.ManyToManyField(User, blank=True, related_name='comment_likes')
-    dislikes = models.ManyToManyField(User, blank=True, related_name='comment_dislikes')
-    parent = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True, related_name='+')
+    likes = models.ManyToManyField(
+        User, blank=True, related_name='comment_likes')
+    dislikes = models.ManyToManyField(
+        User, blank=True, related_name='comment_dislikes')
+    parent = models.ForeignKey(
+        'self', on_delete=models.CASCADE, blank=True, null=True, related_name='+')
 
     @property
     def children(self):
@@ -44,7 +49,8 @@ class UserProfile(models.Model):
     location = models.CharField(max_length=100, blank=True, null=True)
     picture = models.ImageField(upload_to='upload/profile_pictures', default='upload/profile_pictures/ok.png',
                                 blank=True)
-    followers = models.ManyToManyField(User, blank=True, related_name='followers')
+    followers = models.ManyToManyField(
+        User, blank=True, related_name='followers')
 
 
 @receiver(post_save, sender=User)
@@ -59,27 +65,39 @@ def save_user_profile(sender, instance, **kwargs):
 
 
 class Notification(models.Model):
-    #1: Like
-    #2: Comment
-    #3: Follow
+    # 1: Like
+    # 2: Comment
+    # 3: Follow
+    # 4. DM
+
     notification_type = models.IntegerField()
-    to_user = models.ForeignKey(User, related_name='notification_to', on_delete=models.CASCADE, null=True)
-    from_user = models.ForeignKey(User, related_name='notification_from', on_delete=models.CASCADE, null=True)
-    post = models.ForeignKey('Post', on_delete=models.CASCADE, related_name='+', blank=True, null=True)
-    comment = models.ForeignKey('Comment', on_delete=models.CASCADE, related_name='+', blank=True, null=True)
+    to_user = models.ForeignKey(
+        User, related_name='notification_to', on_delete=models.CASCADE, null=True)
+    from_user = models.ForeignKey(
+        User, related_name='notification_from', on_delete=models.CASCADE, null=True)
+    post = models.ForeignKey(
+        'Post', on_delete=models.CASCADE, related_name='+', blank=True, null=True)
+    comment = models.ForeignKey(
+        'Comment', on_delete=models.CASCADE, related_name='+', blank=True, null=True)
     date = models.DateTimeField(default=timezone.now)
     user_has_seen = models.BooleanField(default=False)
 
 
 class ThreadModel(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
-    receiver = models.ForeignKey(User, on_delete=models.CASCADE,related_name='+')
+    receiver = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='+')
+
 
 class MessageModel(models.Model):
-    thread = models.ForeignKey(ThreadModel, related_name='+', on_delete=models.CASCADE, blank=True, null=True)
-    sender_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
-    receiver_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
+    thread = models.ForeignKey(
+        ThreadModel, related_name='+', on_delete=models.CASCADE, blank=True, null=True)
+    sender_user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='+')
+    receiver_user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='+')
     body = models.CharField(max_length=1000)
-    image = models.ImageField(upload_to='upload/message_photos', blank=True, null=True)
+    image = models.ImageField(
+        upload_to='upload/message_photos', blank=True, null=True)
     date = models.DateTimeField(default=timezone.now)
     is_read = models.BooleanField(default=False)
