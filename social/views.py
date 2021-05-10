@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.views.generic import UpdateView, DeleteView
 from .forms import PostForm, CommentForm, ThreadForm, MessageForm
 from .models import Comment, Post, ThreadModel, UserProfile, Notification, ThreadModel, MessageModel
-
+from django.contrib import messages
 
 class PostListView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
@@ -443,6 +443,7 @@ class CreateThread(View):
 
                 return redirect('thread', pk=thread.pk)
         except:
+            messages.error(request,'Invalid User Name')
             return redirect('create_thread')
 
 

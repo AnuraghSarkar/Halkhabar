@@ -64,6 +64,12 @@ def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
 
+class ThreadModel(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
+    receiver = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='+')
+
+
 class Notification(models.Model):
     # 1: Like
     # 2: Comment
@@ -79,14 +85,10 @@ class Notification(models.Model):
         'Post', on_delete=models.CASCADE, related_name='+', blank=True, null=True)
     comment = models.ForeignKey(
         'Comment', on_delete=models.CASCADE, related_name='+', blank=True, null=True)
+    thread = models.ForeignKey(
+        'ThreadModel', on_delete=models.CASCADE, related_name='+', blank=True, null=True)
     date = models.DateTimeField(default=timezone.now)
     user_has_seen = models.BooleanField(default=False)
-
-
-class ThreadModel(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
-    receiver = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='+')
 
 
 class MessageModel(models.Model):
